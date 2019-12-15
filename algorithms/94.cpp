@@ -10,28 +10,26 @@
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> ret;
-        if (!root)
-            return ret;
-        stack<pair<TreeNode*, bool>> s;
-        s.push({root, true});
-        while (!s.empty()) {
-            TreeNode *cur = s.top().first;
-            bool state = s.top().second;
-            if (state) {
-                if (cur->left)
-                    s.push({cur->left, true});
-                else 
-                    s.top().second = false;
+        vector<int> vec;
+        TreeNode *cur = root, *pre = nullptr;
+        while (cur) {
+            if (!cur->left) {
+                vec.emplace_back(cur->val);
+                cur = cur->right;
             } else {
-                ret.emplace_back(cur->val);
-                s.pop();
-                if (cur->right)
-                    s.push({cur->right, true});
-                else if (!s.empty())
-                    s.top().second = false;
+                pre = cur->left;
+                while (pre->right && pre->right != cur)
+                    pre = pre->right;
+                if (pre->right) {
+                    pre->right = nullptr;
+                    vec.emplace_back(cur->val);
+                    cur = cur->right;
+                } else {
+                    pre->right = cur;
+                    cur = cur->left;
+                }
             }
         }
-        return ret;
+        return vec;
     }
 };
