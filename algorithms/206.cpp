@@ -22,4 +22,15 @@ public:
         }
         return vhead.next;
     }
+
+    /* recursion version
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head->next)
+            return head;
+        ListNode *ret = reverseList(head->next);
+        head->next->next = head;
+        head->next = nullptr;
+        return ret;
+    }
+    */
 };
