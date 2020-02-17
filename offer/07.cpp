@@ -16,7 +16,7 @@ public:
     TreeNode* partition(size_t pre_i, size_t l, size_t r, vector<int> &preorder, vector<int> &inorder) {
         size_t pivot = l;
         for (size_t i = l; i < r; ++i)
-            if (inorder[i] == preorder[pre_i]) {
+            if (inorder[i] ==   preorder[pre_i]) {
                 pivot = i;
                 break;
             }
