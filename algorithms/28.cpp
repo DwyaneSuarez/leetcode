@@ -1,52 +1,32 @@
 class Solution {
 public:
     int strStr(string haystack, string needle) {
-        int n = haystack.size();
-        int m = needle.size();
-        if (m == 0)
+        int m = haystack.size();
+        int n = needle.size();
+        if (n == 0)
             return 0;
-        int* next = new int[m];
+        vector<int> next(n);
         next[0] = 0;
         int i = 1, j = 0;
-        while (i < m) {
-            if (needle[i] == needle[j]) {
-                next[i] = j + 1;
-                i++;
-                j++;
-            } else {
-                while (needle[i] != needle[j]) {
-                    if (j == 0) {
-                        next[i] = 0;
-                        break;
-                    } else {
-                        j = next[j - 1];
-                    }
-                }
-                if (needle[i] == needle[j]) {
-                    next[i] = j + 1;
-                    j++;
-                }
-                i++;
-            }
+        for (; i < n; ++i) {
+            while (j > 0 && needle[j] != needle[i])
+                j = next[j - 1];
+            if (needle[i] == needle[j])
+                next[i] = ++j;
+            else
+                next[i] = 0;
         }
         i = 0, j = 0;
-        while (i < n) {
-            if (haystack[i] == needle[j]) {
-                i++;
-                j++;
-            } else {
-                if (j != 0)
-                    j = next[j - 1];
-                else {
-                    i++;
-                }
-            }
-            if (j == m) {
-                delete []next;
-                return i - m;
-            }
+        while (i < m) {
+            while (j > 0 && haystack[i] != needle[j])
+                j = next[j - 1];
+            if (haystack[i] == needle[j])
+                ++i, ++j;
+            else
+                ++i;
+            if (j == n)
+                return i - n;
         }
-        delete []next;
         return -1;
     }
 };
