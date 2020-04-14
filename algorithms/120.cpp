@@ -1,3 +1,5 @@
+// dp数组可以优化到一维，因为只依赖于上一层的结果
+
 class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
