@@ -1,31 +1,43 @@
-class Solution {
-public:
-    string reverseWords(string s) {
-        string s1;
-        int b = 0;
-        int e = int(s.size()) - 1;
-        while (b < s.size() && s[b] == ' ')
-            ++b;
-        while (e >= 0 && s[e] == ' ')
-            --e;
-        for (int i = b; i <= e; ++i) {
-            if (s[i] != ' ') {
-                s1 += s[i];
-            } else if (i > 0 && s[i] != s[i - 1])
-                s1 += s[i];
+void swap(char *a, char *b) {
+    char tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+char * reverseWords(char * s){
+    int len = strlen(s);
+    for (int i = 0; 2 * i < len; ++i)
+        swap(s + i, s + (len - 1 - i));
+    char *p = s;
+    char *q = s;
+    char *cur = s;
+    while (*p != '\0' && *q != '\0') {
+        while (*p != '\0' && *p == ' ')
+            ++p;
+        q = p;
+        while (*q != '\0' && *q != ' ')
+            ++q;
+        if (p >= q) 
+            continue;
+        if (cur != s) {
+            *cur = ' ';
+            ++cur;
         }
-        reverse(s1.begin(), s1.end());
-        auto iter1 = s1.begin();
-        auto iter2 = s1.begin();
-        while (iter2 != s1.end()) {
-            if (*iter2 == ' ') {
-                reverse(iter1, iter2);
-                ++iter2;
-                iter1 = iter2;
-            } else
-                ++iter2;
+        char *tmp = cur;
+        while (p < q) {
+            *tmp = *p;
+            ++tmp;
+            ++p;
         }
-        reverse(iter1, iter2);
-        return s1;
+        char *beg = cur;
+        cur = tmp;
+        --tmp;
+        while (beg < tmp) {
+            swap(beg, tmp);
+            ++beg;
+            --tmp;
+        }
     }
-};
+    *cur = '\0';
+    return s;
+}
