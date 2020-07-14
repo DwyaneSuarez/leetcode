@@ -9,18 +9,16 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        if (!head)
-            return head;
-        ListNode vhead(0);
-        vhead.next = head;
+        ListNode *vnode = new ListNode(0);
+        vnode->next = head;
         ListNode *cur = head;
-        while (cur->next) {
+        while (cur && cur->next) {
             ListNode *tmp = cur->next;
             cur->next = tmp->next;
-            tmp->next = vhead.next;
-            vhead.next = tmp;
+            tmp->next = vnode->next;
+            vnode->next = tmp;
         }
-        return vhead.next;
+        return vnode->next;
     }
 
     /* recursion version
