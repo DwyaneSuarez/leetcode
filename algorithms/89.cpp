@@ -1,9 +1,10 @@
 class Solution {
 public:
     vector<int> grayCode(int n) {
-        vector<int> ret;
-        for (int i = 0; i < 1<<n; i++)
-            ret.push_back(i ^ i>>1);
-        return ret;
+        vector<int> vec;
+        for (int i = 0; i < (1 << n); ++i) {
+            vec.push_back(i ^ (i >> 1));
+        }
+        return vec;
     }
 };
