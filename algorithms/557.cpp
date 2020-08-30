@@ -1,15 +1,18 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        int n = s.size();
-        int i = 0;
-        int b = 0;
-        while (i < n) {
-            i = b;
-            while (i < n && s[i] != ' ')
+        int p = 0, q = 0;
+        while (p < s.size()) {
+            while (p < s.size() && s[p] == ' ') ++p;
+            q = p;
+            while (q < s.size() && s[q] != ' ') ++q;
+            int i = p, j = q - 1;
+            while (i < j) {
+                swap(s[i], s[j]);
                 ++i;
-            reverse(&s[b], &s[i]);
-            b = i + 1;
+                --j;
+            }
+            p = q;
         }
         return s;
     }
